@@ -1,18 +1,12 @@
-// Ambil elemen dari HTML
-const coinDisplay = document.getElementById('coins');
-const clickButton = document.getElementById('click-btn');
-
-// Variabel untuk menyimpan jumlah coin
 let coins = 0;
 
-// Fungsi saat tombol diklik
-clickButton.addEventListener('click', () => {
-    coins++;
-    coinDisplay.textContent = `${coins} Billions`;
+const coinCount = document.getElementById("coinCount");
+const button = document.getElementById("clickButton");
 
-    // Animasi kecil waktu klik
-    clickButton.style.transform = 'scale(0.95)';
-    setTimeout(() => {
-        clickButton.style.transform = 'scale(1)';
-    }, 100);
+button.addEventListener("click", () => {
+  coins++;
+  coinCount.textContent = `${coins} Billions`;
+  button.style.transform = "scale(0.95)";
+  setTimeout(() => (button.style.transform = "scale(1)"), 100);
 });
+
