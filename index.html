@@ -3,18 +3,178 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Billions Clicker 💰</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Billions Clicker 💸</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: linear-gradient(270deg, #001f2e, #00314a, #1d006d, #60006e);
+      background-size: 800% 800%;
+      animation: gradientShift 15s ease infinite;
+      overflow: hidden;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    img {
+      width: 90px;
+      margin-bottom: 20px;
+      transition: transform 0.2s ease;
+    }
+
+    h1 {
+      font-size: 2em;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+
+    #counter {
+      font-size: 1.5em;
+      margin: 10px 0;
+      transition: all 0.3s ease;
+    }
+
+    button {
+      background: #ffd600;
+      border: none;
+      color: #333;
+      font-weight: 600;
+      font-size: 1.1em;
+      padding: 12px 30px;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(255, 214, 0, 0.3);
+      transition: transform 0.1s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .particle {
+      position: absolute;
+      font-size: 20px;
+      animation: floatUp 1s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-100px) scale(0.5); }
+    }
+
+    .reward {
+      position: absolute;
+      color: #ffd600;
+      font-weight: bold;
+      animation: rewardUp 1s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes rewardUp {
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-50px); }
+    }
+
+    .shake {
+      animation: shake 0.4s;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(5deg); }
+      50% { transform: rotate(-5deg); }
+      75% { transform: rotate(5deg); }
+    }
+
+    footer {
+      margin-top: 30px;
+      opacity: 0.7;
+      font-size: 0.9em;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <img src="logo.png" alt="Billions Logo" class="logo" />
-    <h1>💸 Billions Clicker 💸</h1>
-    <p id="coinCount">0 Billions</p>
-    <button id="clickButton">Click to Earn Coins!</button>
-    <p class="hint">Keep clicking and become a Billions whale 🐋</p>
-  </div>
 
-  <script src="script.js"></script>
+  <img id="logo" src="logo.png" alt="Billions Logo" />
+  <h1>💸 Billions Clicker 💸</h1>
+  <div id="counter">0 Billions</div>
+  <button id="clickButton">Click to Earn Coins!</button>
+  <footer>Keep clicking and become a Billions whale 🐋</footer>
+
+  <audio id="clickSound" src="click.mp3"></audio>
+
+  <script>
+    let count = 0;
+    const counter = document.getElementById('counter');
+    const button = document.getElementById('clickButton');
+    const logo = document.getElementById('logo');
+    const clickSound = document.getElementById('clickSound');
+
+    button.addEventListener('click', (e) => {
+      count++;
+      animateCounter();
+      spawnParticles(e);
+      spawnReward(e);
+      clickSound.currentTime = 0;
+      clickSound.play();
+
+      if (count % 10 === 0) {
+        logo.classList.add('shake');
+        setTimeout(() => logo.classList.remove('shake'), 400);
+      }
+    });
+
+    function animateCounter() {
+      let start = parseFloat(counter.innerText);
+      let end = count;
+      let i = 0;
+      const frames = 15;
+      const increment = (end - start) / frames;
+      const interval = setInterval(() => {
+        start += increment;
+        counter.innerText = Math.floor(start) + " Billions";
+        if (++i >= frames) {
+          clearInterval(interval);
+          counter.innerText = end + " Billions";
+        }
+      }, 20);
+    }
+
+    function spawnParticles(e) {
+      for (let i = 0; i < 8; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        particle.innerText = "💰";
+        particle.style.left = e.clientX + (Math.random() * 40 - 20) + "px";
+        particle.style.top = e.clientY + (Math.random() * 40 - 20) + "px";
+        document.body.appendChild(particle);
+        setTimeout(() => particle.remove(), 1000);
+      }
+    }
+
+    function spawnReward(e) {
+      const reward = document.createElement('div');
+      reward.classList.add('reward');
+      reward.innerText = "+1 💸";
+      reward.style.left = e.clientX + "px";
+      reward.style.top = e.clientY + "px";
+      document.body.appendChild(reward);
+      setTimeout(() => reward.remove(), 1000);
+    }
+  </script>
+
 </body>
 </html>
+
