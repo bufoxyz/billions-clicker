@@ -1,58 +1,120 @@
-body {
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(180deg, #001f2e, #013a4a);
-  color: white;
-  text-align: center;
-  height: 100vh;
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: linear-gradient(270deg, #4a00e0, #8e2de2, #00c6ff);
+  background-size: 600% 600%;
+  animation: gradientShift 20s ease infinite;
+  color: #fff;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.container {
-  max-width: 400px;
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-.logo {
-  width: 120px;
+#title {
+  font-size: 2.5rem;
   margin-bottom: 20px;
-  animation: float 3s ease-in-out infinite;
+  animation: pulse 3s infinite;
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+#logo {
+  width: 180px;
+  transition: transform 0.2s ease;
 }
 
-h1 {
-  font-size: 1.8em;
-  margin-bottom: 10px;
+#logo.clicked {
+  transform: scale(1.2);
 }
 
-p#coinCount {
-  font-size: 1.4em;
+#coins {
+  font-size: 2rem;
   margin: 15px 0;
+  transition: all 0.2s ease;
 }
 
-button {
-  background-color: #ffd700;
+#click-btn {
+  background: #fff;
+  color: #333;
   border: none;
-  padding: 12px 20px;
-  font-size: 1.1em;
-  border-radius: 10px;
+  padding: 12px 25px;
+  border-radius: 20px;
+  font-size: 1.2rem;
   cursor: pointer;
-  transition: 0.2s;
+  transition: all 0.2s ease;
 }
 
-button:hover {
-  background-color: #ffea61;
-  transform: scale(1.05);
+#click-btn:hover {
+  transform: scale(1.1);
+  background: #00c6ff;
+  color: #fff;
 }
 
-.hint {
-  margin-top: 15px;
-  font-size: 0.9em;
-  color: #b5d6d6;
+#shop {
+  margin-top: 30px;
+  text-align: center;
 }
 
+#shop button {
+  margin: 8px;
+  background: #222;
+  color: #fff;
+  border: 1px solid #fff;
+  padding: 8px 15px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#shop button:hover {
+  background: #00c6ff;
+  color: #fff;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.coin {
+  position: absolute;
+  font-size: 20px;
+  animation: fly 1s ease-out forwards;
+}
+
+@keyframes fly {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-100px) scale(0.5); }
+}
+
+#achievements {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  text-align: right;
+}
+
+.achievement {
+  background: rgba(0,0,0,0.6);
+  border-radius: 10px;
+  padding: 10px 15px;
+  margin-top: 10px;
+  animation: fadeOut 3s forwards;
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(20px); }
+}
